@@ -1,6 +1,11 @@
 package data
 
+import (
+	"time"
+)
+
 type Invoice struct {
+	ID       int64
 	From     Company
 	To       Company
 	Services []Service
@@ -9,6 +14,7 @@ type Invoice struct {
 	Total    int
 	Currency string
 	Vat      int
+	CreateAt time.Time
 }
 
 type Service struct {

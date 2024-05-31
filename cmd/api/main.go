@@ -3,8 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log/slog"
 	"os"
 )
+
+const (
+	version = "1.0.0"
+)
+
+type responseFormat map[string]string
 
 type config struct {
 	port int
@@ -12,7 +19,8 @@ type config struct {
 }
 
 type application struct {
-	cfg config
+	config config
+	logger *slog.Logger
 }
 
 func main() {
@@ -21,8 +29,11 @@ func main() {
 	flag.IntVar(&cfg.port, "port", 3000, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "API environment")
 
+	flag.Parse()
+
 	app := &application{
-		cfg: cfg,
+		config: cfg,
+		logger: slog.New(slog.NewTextHandler(os.Stdout, nil)),
 	}
 
 	if err := app.startServer(); err != nil {

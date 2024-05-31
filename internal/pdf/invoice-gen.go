@@ -1,4 +1,4 @@
-package data
+package pdf
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Nico2220/billease/internal/data"
 	"github.com/jung-kurt/gofpdf"
 )
 
@@ -14,7 +15,7 @@ func CreateInvoice() {
 
 	pdf.AddPage()
 
-	services := []Service{
+	services := []data.Service{
 		{
 			ServiceType: "Develpment",
 			Description: "api developement",
@@ -41,7 +42,7 @@ func CreateInvoice() {
 	// 	Vat:      22,
 	// }
 
-	from := Company{
+	from := data.Company{
 		Name:         "PhiTech",
 		Contact:      "Nicolas",
 		Adress:       "Germain street",
@@ -53,7 +54,7 @@ func CreateInvoice() {
 		Email:        "nphilibert17@gmail.com",
 	}
 
-	to := Company{
+	to := data.Company{
 		Name:         "The Good Seat",
 		Contact:      "Alex",
 		Adress:       "Rue des entrepreneur",
@@ -65,7 +66,7 @@ func CreateInvoice() {
 		Email:        "alex@gmail.com",
 	}
 
-	invoiceData := Invoice{
+	invoiceData := data.Invoice{
 		From:     from,
 		To:       to,
 		Services: services,
