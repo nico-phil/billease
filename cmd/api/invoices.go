@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Nico2220/billease/internal/data"
+	"github.com/Nico2220/billease/internal/pdf"
 )
 
 func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,9 +16,6 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		Services []data.Service `json:"services"`
 		Vat      int            `json:"vat"`
 		Currency string         `json:"currency"`
-		// SubTotal int            `json:"subTotal"`
-		// Tax      int            `json:"tax"`
-		// Total    int            `json:"total"`
 	}
 
 	dec := json.NewDecoder(r.Body)
@@ -37,8 +35,44 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	invoice.CalculateTax()
 	invoice.CalculateTotal()
 
+	// insert invoice into db
+
+	// create pdf
+	c1 := getCompany(invoice.From)
+
+	c2 := getCompany(invoice.To)
+	pdf.New(invoice, c1, c2)
+
 	app.writeJSON(w, http.StatusOK, responseFormat{"data": "created"}, nil)
 
 	fmt.Printf("%+v", invoice)
 
+}
+
+func getCompany(id int64) data.Company {
+	if id == 1 {
+		return data.Company{
+			Name:         "PhiTech Nico",
+			Contact:      "Nicolas",
+			Adress:       "Germain street",
+			Country:      "Estonia",
+			SocityNumber: "123456",
+			Code:         "585943",
+			VatNumber:    "EE1234445",
+			PhoneNumber:  "+79772820353",
+			Email:        "nphilibert17@gmail.com",
+		}
+	}
+
+	return data.Company{
+		Name:         "The Good Seat",
+		Contact:      "Alex",
+		Adress:       "Rue des entrepreneur",
+		Country:      "France",
+		SocityNumber: "123456",
+		Code:         "585943",
+		VatNumber:    "EE1234445",
+		PhoneNumber:  "+79772820353",
+		Email:        "alex@gmail.com",
+	}
 }

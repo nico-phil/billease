@@ -52,15 +52,6 @@ type InvoiceModel struct {
 	DB []string
 }
 
-// func NewData(data InputData, from, to Company) *Invoice {
-// 	return &Invoice{
-// 		From:     from,
-// 		To:       to,
-// 		Services: data.Services,
-// 		SubTotal: data.SubTotal,
-// 		Tax:      data.Tax,
-// 		Total:    data.Total,
-// 		Currency: data.Currency,
-// 		Vat: data.Vat,
-// 	}
+// func Insert(invoiceData, from, to Company) *Invoice {
+// 	return nil
 // }
