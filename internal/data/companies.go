@@ -1,6 +1,7 @@
 package data
 
 type Company struct {
+	ID           int64
 	Name         string
 	Contact      string
 	Adress       string

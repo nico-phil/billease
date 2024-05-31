@@ -6,33 +6,33 @@ import (
 
 type Invoice struct {
 	ID       int64
-	From     Company
-	To       Company
+	From     int64
+	To       int64
 	Services []Service
-	SubTotal int
-	Tax      int
-	Total    int
+	SubTotal float64
+	Tax      float64
+	Total    float64
 	Currency string
 	Vat      int
 	CreateAt time.Time
 }
 
 type Service struct {
-	ServiceType string
-	Description string
-	Rate        int
-	Quantity    int
-	Amount      int
+	ServiceType string  `json:"service_type"`
+	Description string  `json:"description"`
+	Rate        float64 `json:"rate"`
+	Quantity    float64 `json:"quantity"`
+	Amount      float64 `json:"amount"`
 }
 
-type InputData struct {
-	Services []Service
-	SubTotal int
-	Tax      int
-	Total    int
-	Currency string
-	Vat      int
-}
+// type InputData struct {
+// 	Services []Service
+// 	SubTotal int
+// 	Tax      float
+// 	Total    int
+// 	Currency string
+// 	Vat      int
+// }
 
 func (i *Invoice) CalculateSubTotal() {
 	for _, v := range i.Services {
@@ -41,12 +41,11 @@ func (i *Invoice) CalculateSubTotal() {
 }
 
 func (i *Invoice) CalculateTax() {
-	i.Tax = int((i.SubTotal * i.Vat) / 100)
-
+	i.Tax = (i.SubTotal * float64(i.Vat)) / 100
 }
 
 func (i *Invoice) CalculateTotal() {
-	i.Total = int(i.Tax + i.SubTotal)
+	i.Total = i.Tax + i.SubTotal
 }
 
 type InvoiceModel struct {
