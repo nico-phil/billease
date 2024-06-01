@@ -27,7 +27,12 @@ type Service struct {
 }
 
 func ValidateInvoice(v *validator.Validator, invoice *Invoice) {
-	v.Check(invoice.Vat >= 0, "vat", "Shoud be a posifive number")
+	v.Check(invoice.From > 0, "from", "from must be provided")
+	v.Check(invoice.To > 0, "to", "to must be provided")
+	v.Check(len(invoice.Services) > 0, "services", "must be containt at least 1 service")
+	v.Check(invoice.Vat >= 0, "vat", "must be a posifive number")
+	v.Check(invoice.Currency != "", "currency", "must be provided")
+
 }
 
 func (i *Invoice) CalculateSubTotal() {

@@ -9,7 +9,7 @@ func (app *application) errorResponse(w http.ResponseWriter, r *http.Request, st
 	err := app.writeJSON(w, statusCode, responseFormat{"error": message}, nil)
 	if err != nil {
 		app.logError(r, err)
-		w.WriteHeader(status)
+		w.WriteHeader(statusCode)
 	}
 
 }

@@ -23,6 +23,7 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	err := dec.Decode(&input)
 	if err != nil {
 		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": err.Error()}, nil)
+		return
 	}
 
 	invoice := data.Invoice{
