@@ -86,10 +86,6 @@ func New(inputData data.Invoice, from, to data.Company) {
 		SubTotal: inputData.SubTotal,
 	}
 
-	// invoiceData.CalculateSubTotal()
-	// invoiceData.CalculateTax()
-	// invoiceData.CalculateTotal()
-
 	var opt gofpdf.ImageOptions
 	pdf.SetFont("Arial", "B", 14)
 	pdf.SetTextColor(64, 64, 64)

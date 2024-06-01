@@ -39,7 +39,8 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	v := validator.New()
 
 	if data.ValidateInvoice(v, &invoice); !v.Valid() {
-		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": "error append"}, nil)
+		app.errorResponse(w, r, http.StatusBadRequest, v.Errors)
+		return
 	}
 
 	// insert invoice into db
