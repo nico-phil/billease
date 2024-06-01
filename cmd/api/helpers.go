@@ -19,3 +19,9 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data any, h
 
 	return nil
 }
+
+func (app *application) readJSON(r *http.Request, dst any) error {
+	dec := json.NewDecoder(r.Body)
+	err := dec.Decode(dst)
+	return err
+}

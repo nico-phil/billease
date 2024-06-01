@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -19,8 +18,7 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		Currency string         `json:"currency"`
 	}
 
-	dec := json.NewDecoder(r.Body)
-	err := dec.Decode(&input)
+	err := app.readJSON(r, &input)
 	if err != nil {
 		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": err.Error()}, nil)
 		return
@@ -31,6 +29,7 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		To:       input.To,
 		Services: input.Services,
 		Vat:      input.Vat,
+		Currency: input.Currency,
 	}
 
 	invoice.CalculateSubTotal()
