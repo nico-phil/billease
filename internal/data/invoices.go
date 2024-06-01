@@ -50,7 +50,11 @@ func (i *Invoice) CalculateTotal() {
 }
 
 type InvoiceModel struct {
-	DB []string
+	DB map[string]Invoice
+}
+
+func (m *InvoiceModel) InsertInvoice() {
+
 }
 
 func GetCompany(id int64) Company {

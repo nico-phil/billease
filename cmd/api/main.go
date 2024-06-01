@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+
+	"github.com/Nico2220/billease/internal/data"
 )
 
 const (
@@ -21,6 +23,7 @@ type config struct {
 type application struct {
 	config config
 	logger *slog.Logger
+	models data.Models
 }
 
 func main() {
@@ -34,6 +37,7 @@ func main() {
 	app := &application{
 		config: cfg,
 		logger: slog.New(slog.NewTextHandler(os.Stdout, nil)),
+		models: data.NewModels(),
 	}
 
 	if err := app.startServer(); err != nil {

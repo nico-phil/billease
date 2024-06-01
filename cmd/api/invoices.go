@@ -44,12 +44,14 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// insert invoice into db
-
 	// create pdf
 	c1 := data.GetCompany(invoice.From)
 
 	c2 := data.GetCompany(invoice.To)
+
+	/// insert invoice into db
+
+	//create invoice
 	pdf.New(invoice, c1, c2)
 
 	app.writeJSON(w, http.StatusOK, responseFormat{"data": "created"}, nil)
