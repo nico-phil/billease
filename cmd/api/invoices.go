@@ -39,7 +39,7 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	v := validator.New()
 
 	if data.ValidateInvoice(v, &invoice); !v.Valid() {
-		app.errorResponse(w, r, http.StatusBadRequest, v.Errors)
+		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
 

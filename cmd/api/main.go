@@ -11,7 +11,7 @@ const (
 	version = "1.0.0"
 )
 
-type responseFormat map[string]string
+type responseFormat map[string]any
 
 type config struct {
 	port int
