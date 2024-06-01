@@ -43,18 +43,26 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// create pdf
-	c1 := data.GetCompany(invoice.From)
+	// insert invoice into db
+	i, err := app.models.Invoices.Insert(invoice)
+	if err != nil {
+		fmt.Println("err")
+		return
+	}
+	fmt.Println("i", i)
 
+	c1 := data.GetCompany(invoice.From)
 	c2 := data.GetCompany(invoice.To)
 
-	/// insert invoice into db
-
 	//create invoice
-	pdf.New(invoice, c1, c2)
+	filename, err := pdf.New(invoice, c1, c2)
+	if err != nil {
+		fmt.Println("err")
+		return
+	}
 
-	app.writeJSON(w, http.StatusOK, responseFormat{"data": "created"}, nil)
+	invoice.Link = filename
 
-	fmt.Printf("%+v", invoice)
+	app.writeJSON(w, http.StatusOK, responseFormat{"invoice": invoice}, nil)
 
 }

@@ -16,6 +16,7 @@ type Invoice struct {
 	Currency string
 	Vat      int
 	CreateAt time.Time
+	Link     string
 }
 
 type Service struct {
@@ -53,7 +54,8 @@ type InvoiceModel struct {
 	DB map[string]Invoice
 }
 
-func (m *InvoiceModel) InsertInvoice() {
+func (m *InvoiceModel) Insert(invoice Invoice) (Invoice, error) {
+	return invoice, nil
 
 }
 
