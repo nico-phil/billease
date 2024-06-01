@@ -7,6 +7,7 @@ import (
 
 	"github.com/Nico2220/billease/internal/data"
 	"github.com/Nico2220/billease/internal/pdf"
+	"github.com/Nico2220/billease/internal/validator"
 )
 
 func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +25,6 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": err.Error()}, nil)
 	}
 
-
 	invoice := data.Invoice{
 		From:     input.From,
 		To:       input.To,
@@ -35,6 +35,12 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	invoice.CalculateSubTotal()
 	invoice.CalculateTax()
 	invoice.CalculateTotal()
+
+	v := validator.New()
+
+	if data.ValidateInvoice(v, &invoice); !v.Valid() {
+		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": "error append"}, nil)
+	}
 
 	// insert invoice into db
 

@@ -1,6 +1,7 @@
 package data
 
 import (
+	"github.com/Nico2220/billease/internal/validator"
 	"time"
 )
 
@@ -25,14 +26,9 @@ type Service struct {
 	Amount      float64 `json:"amount"`
 }
 
-// type InputData struct {
-// 	Services []Service
-// 	SubTotal int
-// 	Tax      float
-// 	Total    int
-// 	Currency string
-// 	Vat      int
-// }
+func ValidateInvoice(v *validator.Validator, invoice *Invoice) {
+	v.Check(invoice.Vat >= 0, "vat", "Shoud be a posifive number")
+}
 
 func (i *Invoice) CalculateSubTotal() {
 	for _, v := range i.Services {
