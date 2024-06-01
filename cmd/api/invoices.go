@@ -24,6 +24,7 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		app.writeJSON(w, http.StatusInternalServerError, responseFormat{"error": err.Error()}, nil)
 	}
 
+
 	invoice := data.Invoice{
 		From:     input.From,
 		To:       input.To,
@@ -38,41 +39,13 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	// insert invoice into db
 
 	// create pdf
-	c1 := getCompany(invoice.From)
+	c1 := data.GetCompany(invoice.From)
 
-	c2 := getCompany(invoice.To)
+	c2 := data.GetCompany(invoice.To)
 	pdf.New(invoice, c1, c2)
 
 	app.writeJSON(w, http.StatusOK, responseFormat{"data": "created"}, nil)
 
 	fmt.Printf("%+v", invoice)
 
-}
-
-func getCompany(id int64) data.Company {
-	if id == 1 {
-		return data.Company{
-			Name:         "PhiTech Nico",
-			Contact:      "Nicolas",
-			Adress:       "Germain street",
-			Country:      "Estonia",
-			SocityNumber: "123456",
-			Code:         "585943",
-			VatNumber:    "EE1234445",
-			PhoneNumber:  "+79772820353",
-			Email:        "nphilibert17@gmail.com",
-		}
-	}
-
-	return data.Company{
-		Name:         "The Good Seat",
-		Contact:      "Alex",
-		Adress:       "Rue des entrepreneur",
-		Country:      "France",
-		SocityNumber: "123456",
-		Code:         "585943",
-		VatNumber:    "EE1234445",
-		PhoneNumber:  "+79772820353",
-		Email:        "alex@gmail.com",
-	}
 }

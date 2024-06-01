@@ -52,6 +52,30 @@ type InvoiceModel struct {
 	DB []string
 }
 
-// func Insert(invoiceData, from, to Company) *Invoice {
-// 	return nil
-// }
+func GetCompany(id int64) Company {
+	if id == 1 {
+		return Company{
+			Name:         "PhiTech",
+			Contact:      "Nicolas",
+			Adress:       "Germain street",
+			Country:      "Estonia",
+			SocityNumber: "123456",
+			Code:         "585943",
+			VatNumber:    "EE1234445",
+			PhoneNumber:  "+79772820353",
+			Email:        "nphilibert17@gmail.com",
+		}
+	}
+
+	return Company{
+		Name:         "The Good Seat",
+		Contact:      "Alex",
+		Adress:       "Rue des entrepreneur",
+		Country:      "France",
+		SocityNumber: "123456",
+		Code:         "585943",
+		VatNumber:    "EE1234445",
+		PhoneNumber:  "+79772820353",
+		Email:        "alex@gmail.com",
+	}
+}
