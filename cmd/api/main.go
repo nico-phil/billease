@@ -36,7 +36,7 @@ func main() {
 	var cfg config
 	flag.IntVar(&cfg.port, "port", 3000, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "API environment")
-	flag.StringVar(&cfg.aws.bucketName, "bucketName", "invoice-s3-bucket-dev", "AWS bucket name")
+	flag.StringVar(&cfg.aws.bucketName, "bucketName", os.Getenv("BILLEASE_BUCKET_NAME"), "AWS bucket name")
 
 	flag.Parse()
 

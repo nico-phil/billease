@@ -12,3 +12,15 @@ type Company struct {
 	PhoneNumber  string
 	Email        string
 }
+
+type CompanyModel struct {
+	DB []Company
+}
+
+func (m *CompanyModel) Insert() (*Company, error) {
+	return nil, nil
+}
+
+func (m CompanyModel) Get(id int64) (*Company, error) {
+	return nil, nil
+}
