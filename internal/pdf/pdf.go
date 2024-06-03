@@ -175,7 +175,7 @@ func New(inputData data.Invoice, from, to data.Company) (string, error) {
 
 	if pdf.Err() {
 		log.Fatal(pdf.Error())
-		return"", pdf.Error()
+		return "", pdf.Error()
 	}
 	filename := "hello"
 

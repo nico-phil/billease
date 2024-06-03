@@ -61,6 +61,8 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
+	app.awsService.UploadFile(filename)
+
 	invoice.Link = filename
 
 	app.writeJSON(w, http.StatusOK, responseFormat{"invoice": invoice}, nil)
