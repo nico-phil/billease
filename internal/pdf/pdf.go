@@ -10,7 +10,7 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
-func New(inputData data.Invoice, from, to data.Company) (string, error) {
+func New(inputData data.Invoice, from, to data.Company, filename string) error {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 
 	pdf.AddPage()
@@ -175,14 +175,14 @@ func New(inputData data.Invoice, from, to data.Company) (string, error) {
 
 	if pdf.Err() {
 		log.Fatal(pdf.Error())
-		return "", pdf.Error()
+		return pdf.Error()
 	}
-	filename := "hello"
+	// filename := "hello"
 
-	err := pdf.OutputFileAndClose(fmt.Sprintf("%s.pdf", filename))
+	err := pdf.OutputFileAndClose(filename)
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	return fmt.Sprintf("%s.pdf", filename), nil
+	return nil
 }

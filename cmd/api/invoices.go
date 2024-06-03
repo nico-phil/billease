@@ -44,26 +44,27 @@ func (app *application) createInvoiceHandler(w http.ResponseWriter, r *http.Requ
 	}
 
 	// insert invoice into db
-	i, err := app.models.Invoices.Insert(invoice)
+	_, err = app.models.Invoices.Insert(invoice)
+
 	if err != nil {
 		fmt.Println("err")
 		return
 	}
-	fmt.Println("i", i)
 
 	c1 := data.GetCompany(invoice.From)
 	c2 := data.GetCompany(invoice.To)
 
 	//create invoice
-	filename, err := pdf.New(invoice, c1, c2)
+	filename := "test.pdf"
+	err = pdf.New(invoice, c1, c2, filename)
 	if err != nil {
 		fmt.Println("err")
 		return
 	}
 
-	app.awsService.UploadFile(filename)
+	invoice.Link = fmt.Sprintf("https://%s.s3.eu-west-1.amazonaws.com/%s", app.config.aws.bucketName, filename)
 
-	invoice.Link = filename
+	app.awsService.UploadFile(filename)
 
 	app.writeJSON(w, http.StatusOK, responseFormat{"invoice": invoice}, nil)
 
